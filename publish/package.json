@@ -1,6 +1,6 @@
 {
     "name": "dyeditor-balloon",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "DYEditor-Balloon is 2nd DYEditor series of DYEditor which is custom made to use [CKEditor5](https://www.npmjs.com/package/ckeditor5) in React.",
     "keywords": [
         "react",

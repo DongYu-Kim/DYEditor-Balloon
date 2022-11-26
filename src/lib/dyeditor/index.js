@@ -30,7 +30,7 @@ export default React.memo(function DYEditorBalloon ({data = "", readOnly = false
     if(typeof data !== "string") console.error("data must be a string.")
     if(typeof readOnly !== "boolean") console.error("readOnly must be a boolean")
     
-    return <span ref={DYEditorEl} />
+    return <div ref={DYEditorEl} />
 });
 
 let _editor = null;
