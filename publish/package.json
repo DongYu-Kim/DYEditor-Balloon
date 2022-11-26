@@ -1,0 +1,25 @@
+{
+    "name": "dyeditor-balloon",
+    "version": "1.0.1",
+    "description": "DYEditor-Balloon is 2nd DYEditor series of DYEditor which is custom made to use [CKEditor5](https://www.npmjs.com/package/ckeditor5) in React.",
+    "keywords": [
+        "react",
+        "ckeditor5",
+        "dyeditor"
+    ],
+    "bugs": {
+        "url": "https://github.com/DongYu-Kim/DYEditor-Balloon/issues",
+        "email": "ehddb2252@gmail.com"
+    },
+    "license": "GPL-3.0+",
+    "author": {
+        "name": "DongYu-Kim",
+        "email": "ehddb2252@gmail.com",
+        "url": "https://github.com/DongYu-Kim"
+    },
+    "main": "dist/index.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DongYu-Kim/DYEditor-Balloon"
+    }
+}
