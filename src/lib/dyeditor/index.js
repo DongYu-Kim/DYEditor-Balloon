@@ -35,7 +35,7 @@ export default React.memo(function DYEditorBalloon ({data = "", readOnly = false
 
 let _editor = null;
 export let getData = ()=>console.error("getData can be called after the DYEditorBalloon component is created.");
-export let uploadImages = ()=>console.error("uploadImages is available only after adding imageUploader."); // If not called, the Base64 upload method is used.
+export let uploadImages = async()=>console.error("uploadImages is available only after adding imageUploader."); // If not called, the Base64 upload method is used.
 function setUploadImages(_editor, imageUploader) {
     uploadImages = async() => {
         const promises = [];
@@ -77,7 +77,7 @@ async function checkState() {
         await new Promise(resolve => setTimeout(resolve, TICK));
     return stateFlag;
 }
-export const getEditorTag = () => {
+export const getEditorTag = async() => {
     return new Promise(async(resolve, reject) => {
         const result = await checkState();
         if (!result) reject(new Error("Failed to get DYEditorBalloon HTML element."));
