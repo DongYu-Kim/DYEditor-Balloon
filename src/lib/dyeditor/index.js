@@ -51,9 +51,9 @@ function setUploadImages(_editor, imageUploader) {
         const _setData = (data) => _data = data;
         for(const imgEl of _editor.ui.element.getElementsByTagName('img')) {
             if(isBase64Image(imgEl)) {
-                const resizedImage = await resizeImage(imgEl.src, imgEl.clientWidth, imgEl.clientHeight);
-                const imgFile = dataURLtoFile(resizedImage, "img.png");
                 const promise = new Promise(async(resolve, reject) => {
+                    const resizedImage = await resizeImage(imgEl.src, imgEl.clientWidth, imgEl.clientHeight);
+                    const imgFile = dataURLtoFile(resizedImage, "img.png");
                     const imgUrl = await imageUploader(imgFile)
                     if(typeof imgUrl !== 'string') {
                         _setData(_getData().replace(imgEl.src, "image upload failed"));
