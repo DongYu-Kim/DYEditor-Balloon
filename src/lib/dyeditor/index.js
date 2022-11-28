@@ -23,7 +23,14 @@ export default React.memo(function DYEditorBalloon ({data = "", readOnly = false
             .catch(err => console.error(err));
         }
         return ()=>{
-            if(_editor && _editor.state !== "destroyed") _editor.destroy();
+            if(_editor && _editor.state !== "destroyed") {
+                const _data = _editor.getData();
+                getData = () =>{
+                    if(_editor.getData()) return _editor.getData();
+                    else return _data;
+                }
+                _editor.destroy();
+            }
             state = false;
         };
     })
@@ -45,7 +52,7 @@ function setUploadImages(_editor, imageUploader) {
         for(const imgEl of _editor.ui.element.getElementsByTagName('img')) {
             if(isBase64Image(imgEl)) {
                 const resizedImage = await resizeImage(imgEl.src, imgEl.clientWidth, imgEl.clientHeight);
-                const imgFile = dataURLtoFile(resizedImage, "img.jpg");
+                const imgFile = dataURLtoFile(resizedImage, "img.png");
                 const promise = new Promise(async(resolve, reject) => {
                     const imgUrl = await imageUploader(imgFile)
                     if(typeof imgUrl !== 'string') {
@@ -62,6 +69,10 @@ function setUploadImages(_editor, imageUploader) {
         }
         return Promise.allSettled(promises).then(async(results)=>{
             await _editor.setData(_getData())
+            getData = () =>{
+                if(_editor.getData()) return _editor.getData();
+                else return _getData();
+            }
             return results
         });
     }
