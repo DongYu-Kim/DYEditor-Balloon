@@ -3,7 +3,7 @@ import BalloonEditor from './ckeditor';
 import { switchToReadMode, removeImageUploadElement, dataURLtoFile, isBase64Image, initializeEditor, resizeImage } from './function';
 
 let flag = false;
-export default React.memo(function DYEditorBalloon ({data = "", readOnly = false, imageUploader = null, style = {}}) {
+export default React.memo(function DYEditorBalloon ({data = "", readOnly = false, imageUpload = {uploader: null, resizing: false}, style = {}}) {
     flag = false;
     const DYEditorEl = useRef();
     useEffect(() => {
@@ -15,8 +15,8 @@ export default React.memo(function DYEditorBalloon ({data = "", readOnly = false
                 _editor.setData(data);
                 initializeEditor(_editor, style);
                 state = true;
-                if(imageUploader === null) removeImageUploadElement();
-                else if(typeof imageUploader === 'function') setUploadImages(_editor, imageUploader);
+                if(imageUpload.uploader === null) removeImageUploadElement();
+                else if(typeof imageUpload.uploader === 'function') setUploadImages(_editor, imageUpload.uploader, imageUpload.resizing);
                 if(readOnly) switchToReadMode(_editor);
                 getData = () => _editor.getData();
             })
@@ -43,7 +43,7 @@ export default React.memo(function DYEditorBalloon ({data = "", readOnly = false
 let _editor = null;
 export let getData = ()=>console.error("getData can be called after the DYEditorBalloon component is created.");
 export let uploadImages = async()=>console.error("uploadImages is available only after adding imageUploader."); // If not called, the Base64 upload method is used.
-function setUploadImages(_editor, imageUploader) {
+function setUploadImages(_editor, imageUploader, resizing) {
     uploadImages = async() => {
         const promises = [];
         let _data = _editor.getData();
@@ -52,7 +52,7 @@ function setUploadImages(_editor, imageUploader) {
         for(const imgEl of _editor.ui.element.getElementsByTagName('img')) {
             if(isBase64Image(imgEl)) {
                 const promise = new Promise(async(resolve, reject) => {
-                    const resizedImage = await resizeImage(imgEl.src, imgEl.clientWidth, imgEl.clientHeight);
+                    const resizedImage = resizing ? await resizeImage(imgEl.src, imgEl.clientWidth, imgEl.clientHeight) : imgEl.src;
                     const imgFile = dataURLtoFile(resizedImage, "img.png");
                     const imgUrl = await imageUploader(imgFile)
                     if(typeof imgUrl !== 'string') {
