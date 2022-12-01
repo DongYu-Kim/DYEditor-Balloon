@@ -34,8 +34,8 @@ export default React.memo(function DYEditorBalloon ({data = "", readOnly = false
             state = false;
         };
     })
-    if(typeof data !== "string") console.error("data must be a string.")
-    if(typeof readOnly !== "boolean") console.error("readOnly must be a boolean")
+    if(typeof data !== "string") console.error("data must be a string.");
+    if(typeof readOnly !== "boolean") console.error("readOnly must be a boolean");
     
     return <div ref={DYEditorEl} />
 });
@@ -54,26 +54,26 @@ function setUploadImages(_editor, imageUploader, resizing) {
                 const promise = new Promise(async(resolve, reject) => {
                     const resizedImage = resizing ? await resizeImage(imgEl.src, imgEl.clientWidth, imgEl.clientHeight) : imgEl.src;
                     const imgFile = dataURLtoFile(resizedImage, "img.png");
-                    const imgUrl = await imageUploader(imgFile)
+                    const imgUrl = await imageUploader(imgFile);
                     if(typeof imgUrl !== 'string') {
                         _setData(_getData().replace(imgEl.src, "image upload failed"));
-                        reject(new Error("imageUploader should be a function that takes a file as input and a imageUrl as output. \n Or, request or response is wrong."))
+                        reject(new Error("imageUploader should be a function that takes a file as input and a imageUrl as output. \n Or, request or response is wrong."));
                     }
                     else {
                         _setData(_getData().replace(imgEl.src, imgUrl));
-                        resolve(imgUrl)
+                        resolve(imgUrl);
                     }
                 })
                 promises.push(promise);
             }
         }
         return Promise.allSettled(promises).then(async(results)=>{
-            await _editor.setData(_getData())
+            await _editor.setData(_getData());
             getData = () =>{
                 if(_editor.getData()) return _editor.getData();
                 else return _getData();
-            }
-            return results
+            };
+            return results;
         });
     }
 }
